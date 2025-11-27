@@ -1,11 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/theakshai/alz/utils"
 	"github.com/theakshai/alz/resource"
+	"github.com/theakshai/alz/utils"
 )
 
 func main() {
@@ -15,7 +16,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	resource.CommandCenter()
+	err := resource.CommandCenter()
+	if err!=nil{
+		fmt.Println(err)
+		log.Fatal("error in control plane, refer the logs in ~/.alz/", err)
+	}
 
 
 }

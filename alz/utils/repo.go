@@ -16,6 +16,22 @@ func homeDir() (string, error){
 	return home, err
 }
 
+func MakeDir(category string) (string, error) {
+	currDir , err := os.Getwd()
+	if err != nil {
+		return "",err
+	}
+
+	modulesDir := filepath.Join(currDir,"Modules",category)
+
+	a_err :=	os.MkdirAll(modulesDir,os.ModePerm)
+	if a_err!=nil{
+		return  "", a_err
+	}
+	return modulesDir,nil
+	
+}
+
 func RepoPath() (string, error)  {
 	home, err := homeDir()
 	if err != nil {
@@ -26,7 +42,6 @@ func RepoPath() (string, error)  {
 }
 
 func CommandExecution(command string) error{
-	//command = "git clone --filter=blob:none --sparse https://github.com/theakshai/tflzmodules.git .abc"
 	cmd := exec.Command("sh", "-c", command)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
